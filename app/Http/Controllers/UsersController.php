@@ -11,12 +11,14 @@ class UsersController extends Controller
 {
    function index(Request $request){
 
+    //Comprobamos que la petición sea de tipo application/json
     if($request->isJson()){
+        //Usando estructura de eloquent para generar consultas a la base de datos
+        //LIST USER
         $user = User::all();
-       //$user->name = 'Mauricio';
-       //$user->email = 'prueba@gmail.com';
        return response()->json($user, 200);
     }else{
+        //Mensaje de error si la petición no es de tipo application/json
         return response()->json(['error'=>'Unauthorized'], 401, []);
     }
    }
@@ -25,7 +27,9 @@ class UsersController extends Controller
 
        //TODO: Crete user in DB
     if($request->isJson()){
+        //Obtenemos los datos en formato Json
         $data = $request->json()->all();
+        //Realizamos el create del usuario mandando un arreglo asociativo
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
@@ -75,6 +79,7 @@ class UsersController extends Controller
         }
     }
 
+    //Metodo para realizar login
     function getToken(Request $request){
         if($request->isJson()){
             try {

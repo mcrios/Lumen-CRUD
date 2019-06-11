@@ -16,6 +16,8 @@ $router->post('/user/login', ['uses' => 'UsersController@getToken']);
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+$router->get('/mensaje', ['uses' => 'MensajeController@mensaje']);
+
 $router->get('/key', function(){
     return str_random(32);
 });
