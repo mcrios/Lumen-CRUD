@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rol;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ class UsersController extends Controller
     if($request->isJson()){
         //Usando estructura de eloquent para generar consultas a la base de datos
         //LIST USER
-        $user = User::all();
+        $user = User::with('rol')->get();
        return response()->json($user, 200);
     }else{
         //Mensaje de error si la petición no es de tipo application/json
@@ -35,7 +36,8 @@ class UsersController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'token' => str_random(60)
+            'token' => str_random(60),
+            'roles_id' => $data['roles_id']
         ]);
         return response()->json([$user], 200);
     }else{
@@ -54,7 +56,7 @@ class UsersController extends Controller
             ]);
             return response()->json([$user], 200);
         }else{
-            return response()->json(['error'=>'Unauthorized'], 401, []);
+            return response()->json(['error'=>'Petition Unauthorized'], 401, []);
         }
     }
     function getUser(Request $request, $id){
@@ -96,5 +98,10 @@ class UsersController extends Controller
         }else{
             return response()->json(['error'=>'Unauthorized'], 401, []);
         }
+    }
+
+      //Metodo para realizar login
+      function test(){
+       return Rol::all();
     }
 }

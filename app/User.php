@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Rol;
 use Illuminate\Auth\Authenticatable;
 use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email','username', 'token', 'password'
+        'name', 'email','username', 'token', 'password', 'roles_id'
     ];
 
     /**
@@ -29,4 +30,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class,'roles_id');
+    }
 }

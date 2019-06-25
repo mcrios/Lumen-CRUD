@@ -24,6 +24,8 @@ $router->get('/key', function(){
 
 $router->group(['middleware'=>['auth']], function() use ($router){
     $router->get('/user', ['uses' => 'UsersController@index']);
+
+    $router->get('/roles', 'UsersController@test');
     $router->get('/user/{id}', ['uses' => 'UsersController@getUser']);
     $router->post('/user', ['uses' => 'UsersController@createUser']);
     $router->put('/user', ['uses' => 'UsersController@updateUser']);
