@@ -7,6 +7,7 @@ use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
@@ -18,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email','username', 'token', 'password'
+        'name', 'email','username', 'token', 'password', 'rol_id'
     ];
 
     /**
@@ -29,4 +30,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public function rol(){
+        return $this->BelongsTo(Rol::class);
+    }
 }

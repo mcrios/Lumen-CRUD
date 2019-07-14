@@ -11,7 +11,7 @@
 |
 */
 
-$router->post('/user/login', ['uses' => 'UsersController@getToken']);
+$router->post('/login', ['uses' => 'UsersController@getToken']);
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
@@ -24,6 +24,11 @@ $router->get('/key', function(){
 
 $router->group(['middleware'=>['auth']], function() use ($router){
     $router->get('/user', ['uses' => 'UsersController@index']);
+    $router->get('/rol', 'RolController@findAll');
+    $router->get('/rol/{id}', 'RolController@findById');
+    $router->post('/rol', 'RolController@create');
+    $router->put('/rol', 'RolController@update');
+    $router->delete('/rol', 'RolController@delete');
     $router->get('/user/{id}', ['uses' => 'UsersController@getUser']);
     $router->post('/user', ['uses' => 'UsersController@createUser']);
     $router->put('/user', ['uses' => 'UsersController@updateUser']);
